@@ -14,12 +14,19 @@ namespace WebApplication1.Controllers
     
     public class PessoaController : ControllerBase
     {
+
+        private PessoaMongoDB Pessoas = new PessoaMongoDB();
+
         [Route("pessoa/cadastrar")]
         [HttpGet]
-        public string get(string nome,int idade)
+        public string get(string email,string nome,int idade)
         {
-            var Pessoas = new PessoaMongoDB();
-            Pessoas.Criar(nome, idade);
+            var p = Pessoas.GetPessoa(email);
+            if (p.Count >=1)
+            {
+                return "Usuário já está adastrado";
+            }
+            Pessoas.Criar(email,nome, idade);
             return "Casdastro OK";
         }
 
@@ -27,18 +34,16 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public string List()
         {
-            var Pessoas = new PessoaMongoDB();
             var response=Pessoas.list();
             return JsonConvert.SerializeObject(response);
         }
 
-        [Route("pessoa/name/{nome}")]
+        [Route("pessoa/name/{email}")]
         [HttpGet]
-        public string name(string nome)
+        public string name(string email)
         {
-            var Pessoas = new PessoaMongoDB();
-            var response = Pessoas.list();
-            return JsonConvert.SerializeObject(response.Where(p=>p.Nome==nome));
+            var response = Pessoas.GetPessoa(email);
+            return JsonConvert.SerializeObject(response);
         }
     }
 }

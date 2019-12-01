@@ -9,7 +9,9 @@ namespace Service
     interface IPessoa
     {
       
-        public void Criar(string name,int idade);
+        public void Criar(string email,string name,int idade);
         public List<Pessoa> list();
+        public List<Pessoa> GetPessoa(string email);
+
     }
 }

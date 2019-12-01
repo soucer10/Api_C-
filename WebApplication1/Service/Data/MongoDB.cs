@@ -22,15 +22,32 @@ namespace MongoDB
             
         } 
 
-        public void Criar(string name,int idade)
+        public void Criar(string email,string name,int idade)
         {
-            Pessoas.InsertOne(new Pessoa(name, idade));
+            Pessoas.InsertOne(new Pessoa(email,name, idade));
+        }
+
+        public List<Pessoa> GetPessoa(string email)
+        {
+            
+            try
+            {
+                var p = Pessoas.Find<Pessoa>(p => p.email == email).ToList(); ;
+               return  p;
+            }
+            catch
+            {
+                return null;
+            }
+        
         }
 
         public List<Pessoa> list()
         {
             return Pessoas.Find(p => p.Nome != "").ToList();
         }
+
+
     }
 
    

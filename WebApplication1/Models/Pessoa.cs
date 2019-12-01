@@ -15,6 +15,11 @@ namespace Models
         public ObjectId _id { get; set; }
 
         [Required]
+
+        [Display(Name = "E-mail")]
+        public string email { get; private set; }
+
+        [Required]
         [Display(Name ="Nome")]
         public string Nome { get; private set; }
 
@@ -24,9 +29,10 @@ namespace Models
 
         [BsonDateTimeOptionsAttribute(Kind = DateTimeKind.Local)]
         public DateTime Timestamp { get; private set; } = DateTime.UtcNow;
-        public Pessoa(string nome, int idade)
+        public Pessoa(string email,string nome, int idade)
         {
-            Nome = nome;
+            this.email = email;
+            this.Nome = nome;
             this.idade = idade;
         }
 
